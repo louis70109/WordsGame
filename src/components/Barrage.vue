@@ -1,102 +1,97 @@
 <template>
   <div class="barrage">
     <button type="button" @click="createText('aaaaa')">push</button>
+    <input id="answer_input" type="text" v-model="answer" @keyup.enter="findBullet()" />
   </div>
 </template>
 
 <script>
 import {
   ref,
-  // onMounted, onUnmounted
+  // onMounted,
+  //  onUnmounted
 } from 'vue';
 import gsap from 'gsap';
 export default {
   setup() {
     let data = ref([]),
+      answer = '',
       count = ref(0);
-    // const words = {
-    //   a: ['あ'],
-    //   ka: ['か'],
-    //   sa: ['さ'],
-    //   ta: ['た'],
-    //   na: ['な'],
-    //   ha: ['は'],
-    //   ma: ['ま'],
-    //   ya: ['や'],
-    //   ra: ['ら'],
-    //   wa: ['わ'],
-    //   i: ['い'],
-    //   ki: ['き'],
-    //   shi: ['し'],
-    //   chi: ['ち'],
-    //   ni: ['に'],
-    //   hi: ['ひ'],
-    //   mi: ['み'],
-    //   ri: ['り'],
-    //   u: ['う'],
-    //   ku: ['く'],
-    //   su: ['す'],
-    //   tsu: ['つ'],
-    //   nu: ['ぬ'],
-    //   fu: ['ふ'],
-    //   mu: ['む'],
-    //   yu: ['ゆ'],
-    //   ru: ['る'],
-    //   n: ['ん'],
-    //   e: ['え'],
-    //   ke: ['け'],
-    //   se: ['せ'],
-    //   te: ['て'],
-    //   ne: ['ね'],
-    //   he: ['へ'],
-    //   me: ['め'],
-    //   re: ['れ'],
-    //   o: ['お', 'を'],
-    //   ko: ['こ'],
-    //   so: ['そ'],
-    //   to: ['と'],
-    //   no: ['の'],
-    //   ho: ['ほ'],
-    //   mo: ['も'],
-    //   yo: ['よ'],
-    //   ro: ['ろ'],
-    // };
-    // ws = new WebSocket(process.env.VUE_APP_WEBSOCKET_URL);
+    const words = {
+      a: ['あ'],
+      ka: ['か'],
+      sa: ['さ'],
+      ta: ['た'],
+      na: ['な'],
+      ha: ['は'],
+      ma: ['ま'],
+      ya: ['や'],
+      ra: ['ら'],
+      wa: ['わ'],
+      i: ['い'],
+      ki: ['き'],
+      shi: ['し'],
+      chi: ['ち'],
+      ni: ['に'],
+      hi: ['ひ'],
+      mi: ['み'],
+      ri: ['り'],
+      u: ['う'],
+      ku: ['く'],
+      su: ['す'],
+      tsu: ['つ'],
+      nu: ['ぬ'],
+      fu: ['ふ'],
+      mu: ['む'],
+      yu: ['ゆ'],
+      ru: ['る'],
+      n: ['ん'],
+      e: ['え'],
+      ke: ['け'],
+      se: ['せ'],
+      te: ['て'],
+      ne: ['ね'],
+      he: ['へ'],
+      me: ['め'],
+      re: ['れ'],
+      o: ['お', 'を'],
+      ko: ['こ'],
+      so: ['そ'],
+      to: ['と'],
+      no: ['の'],
+      ho: ['ほ'],
+      mo: ['も'],
+      yo: ['よ'],
+      ro: ['ろ'],
+    };
 
-    // onMounted(async () => {
-    //   ws.onopen = () => {
-    //     console.log('open connection');
-    //   };
+    function findBullet() {
+      let bullets = bulletFormat()
+      if (this.answer in this.words && Object.keys(bullets).length !== 0) {
+        console.log('答對')
+        removeBulletFromStorage(answer , bullets[this.answer])
+      }
+      else console.log('答錯 or 空的')
 
-    //   ws.onmessage = (event) => {
-    //     const bullet = JSON.parse(event.data);
-    //     if (bullet.text !== '') createText(bullet.text, bullet.avatar);
-    //   };
-    // });
-    // onUnmounted(() => {
-    //   ws.onclose = () => {
-    //     console.log('close connection');
-    //   };
-    // });
-    // function judge_jp_50_words(word) {
-    //   return word in words[word] ? true : false;
-    // }
-
+      this.answer = ''
+      document.getElementById('answer_input').value = ''
+    }
     function bulletFormat() {
       let bullets = localStorage.getItem('bullets');
       // list of dict
       // {
       //   'あ': 'class-1',
       // }
-      if(bullets)
-        return JSON.parse(bullets);
-      return {}
+      if (bullets) return JSON.parse(bullets);
+      return {};
     }
+
     function removeBulletFromStorage(text, tagId) {
       let bullets = bulletFormat();
       if (bullets[tagId] === text) delete bullets[tagId];
       localStorage.setItem('bullets', JSON.stringify(bullets));
     }
+
     function addBulletToStorage(text, tagId) {
       let bullets = bulletFormat();
       bullets[tagId] = text;
@@ -104,7 +99,7 @@ export default {
       // {
       //   'class-1': 'あ',
       // }
-      
+
       localStorage.setItem('bullets', JSON.stringify(bullets));
     }
     // function addRecord(user, record) {}
@@ -134,7 +129,7 @@ export default {
         removeBulletFromStorage(text, div_text.id);
       }
     }
-    return { count, data, createText };
+    return { count, answer, words, data, createText, findBullet };
   },
 };
 </script>
