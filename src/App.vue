@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <Barrage></Barrage>
+    <!-- <Barrage></Barrage> -->
     <router-view />
   </div>
 </template>
 
 <script>
-import Barrage from '@/components/Barrage.vue';
+// import Barrage from '@/components/Barrage.vue';
 export default {
   name: 'App',
   components: {
-    Barrage,
+    // Barrage,
   },
 };
 </script>
