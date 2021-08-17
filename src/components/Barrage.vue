@@ -1,7 +1,12 @@
 <template>
   <div class="barrage">
-    <button type="button" @click="createText('aaaaa')">push</button>
-    <input id="answer_input" type="text" v-model="answer" @keyup.enter="findBullet()" />
+    <button type="button" @click="createText('a')">push</button>
+    <input
+      id="answer_input"
+      type="text"
+      v-model="answer"
+      @keyup.enter="findBullet()"
+    />
   </div>
 </template>
 
@@ -66,15 +71,23 @@ export default {
     };
 
     function findBullet() {
-      let bullets = bulletFormat()
-      if (this.answer in this.words && Object.keys(bullets).length !== 0) {
-        console.log('答對')
-        removeBulletFromStorage(answer , bullets[this.answer])
-      }
-      else console.log('答錯 or 空的')
+      let bullets = bulletFormat();
 
-      this.answer = ''
-      document.getElementById('answer_input').value = ''
+      if (this.answer in this.words && Object.keys(bullets).length !== 0) {
+        console.log('答對');
+
+        for (let key in bullets) {
+          console.log(key);
+          if (bullets[key] === this.answer) {
+            document.getElementById(key).remove();
+            removeBulletFromStorage(this.answer, key);
+            break;
+          }
+        }
+      } else console.log('答錯 or 空的');
+
+      this.answer = '';
+      document.getElementById('answer_input').value = '';
     }
     function bulletFormat() {
       let bullets = localStorage.getItem('bullets');
@@ -88,8 +101,10 @@ export default {
 
     function removeBulletFromStorage(text, tagId) {
       let bullets = bulletFormat();
-      if (bullets[tagId] === text) delete bullets[tagId];
-      localStorage.setItem('bullets', JSON.stringify(bullets));
+      if (bullets[tagId] === text && tagId in bullets) {
+        delete bullets[tagId];
+        localStorage.setItem('bullets', JSON.stringify(bullets));
+      }
     }
 
     function addBulletToStorage(text, tagId) {
@@ -125,7 +140,7 @@ export default {
         x: -1 * (document.documentElement.clientWidth + div_text.clientWidth),
       });
       if (div_text.hasChildNodes()) {
-        div_text.parentNode.removeChild(div_text);
+        div_text.parentNode.removeChild(div_text); // TODO: judge the local storage items
         removeBulletFromStorage(text, div_text.id);
       }
     }
