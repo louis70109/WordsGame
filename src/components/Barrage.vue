@@ -1,6 +1,6 @@
 <template>
   <div class="barrage">
-    <button type="button" @click="createText('a')">push</button>
+    <button type="button" @click="createText('あ')">push</button>
     <input
       id="answer_input"
       type="text"
@@ -73,22 +73,20 @@ export default {
     function findBullet() {
       let bullets = bulletFormat();
 
-      if (this.answer in this.words && Object.keys(bullets).length !== 0) {
+      if (this.answer in words && Object.keys(bullets).length !== 0) {
         console.log('答對');
-
         for (let key in bullets) {
-          console.log(key);
-          if (bullets[key] === this.answer) {
+          if (words[this.answer].indexOf(bullets[key]) !== -1) {
             document.getElementById(key).remove();
-            removeBulletFromStorage(this.answer, key);
+            removeBulletFromStorage(bullets[key], key);
             break;
           }
         }
       } else console.log('答錯 or 空的');
-
       this.answer = '';
       document.getElementById('answer_input').value = '';
     }
+
     function bulletFormat() {
       let bullets = localStorage.getItem('bullets');
       // list of dict
@@ -100,8 +98,15 @@ export default {
     }
 
     function removeBulletFromStorage(text, tagId) {
-      let bullets = bulletFormat();
-      if (bullets[tagId] === text && tagId in bullets) {
+      let bullets = bulletFormat(),
+        wordCondition = false;
+      for (let i in words) {
+        if (words[i].indexOf(text) !== -1) {
+          wordCondition = true;
+          break;
+        }
+      }
+      if (wordCondition && tagId in bullets) {
         delete bullets[tagId];
         localStorage.setItem('bullets', JSON.stringify(bullets));
       }
