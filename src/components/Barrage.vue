@@ -1,6 +1,7 @@
 <template>
   <div class="barrage">
-    <button type="button" @click="createText('あ')">push</button>
+    <button type="button" @click="startRandomPushWords()">push</button>
+    <button type="button" @click="clearRandomPushWords()">stop</button>
     <input
       id="answer_input"
       type="text"
@@ -21,7 +22,8 @@ export default {
   setup() {
     let data = ref([]),
       answer = '',
-      count = ref(0);
+      count = ref(0),
+      intervalControl = null;
     const words = {
       a: ['あ'],
       ka: ['か'],
@@ -59,7 +61,7 @@ export default {
       he: ['へ'],
       me: ['め'],
       re: ['れ'],
-      o: ['お', 'を'],
+      o: ['お'],
       ko: ['こ'],
       so: ['そ'],
       to: ['と'],
@@ -68,7 +70,26 @@ export default {
       mo: ['も'],
       yo: ['よ'],
       ro: ['ろ'],
+      wo: ['を'],
     };
+
+    function startRandomPushWords() {
+      intervalControl = setInterval(() => {
+        console.log('Random push words start');
+        let randomIndex = Math.floor(Math.random() * Object.keys(words).length);
+        const publishWord = Object.keys(words)[randomIndex - 1];
+        console.log(publishWord)
+        let randomWordIndex = Math.floor(
+          Math.random() * Object.keys(words[publishWord]).length
+        );
+        console.log(words[publishWord][randomWordIndex]);
+        createText(words[publishWord][randomWordIndex]);
+      }, 2000);
+    }
+    function clearRandomPushWords() {
+      clearInterval(intervalControl);
+      console.log('interval stop');
+    }
 
     function findBullet() {
       let bullets = bulletFormat();
@@ -149,7 +170,16 @@ export default {
         removeBulletFromStorage(text, div_text.id);
       }
     }
-    return { count, answer, words, data, createText, findBullet };
+    return {
+      count,
+      answer,
+      words,
+      data,
+      createText,
+      findBullet,
+      startRandomPushWords,
+      clearRandomPushWords,
+    };
   },
 };
 </script>
