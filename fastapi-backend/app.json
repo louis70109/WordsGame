@@ -1,0 +1,26 @@
+{
+  "name": "github-actions-monitor-bot",
+  "description": "github-actions-monitor-bot",
+  "repository": "https://github.com/louis70109/github-actions-monitor-bot",
+  "keywords": [
+    "LINE",
+    "fastapi",
+    "python",
+    "static"
+  ],
+  "addons": ["heroku-postgresql:hobby-dev", "papertrail"],
+  "env": {
+    "API_ENV": "API_ENV",
+    "LOTIFY_TOKEN": "",
+    "LINE_CHANNEL_ACCESS_TOKEN": "",
+    "LINE_CHANNEL_SECRET": ""
+  },
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-python.git"
+    },
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
