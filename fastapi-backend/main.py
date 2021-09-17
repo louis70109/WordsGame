@@ -12,7 +12,7 @@ import logging
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
-from routers import webhooks, users
+from routers import users
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +31,7 @@ async def shutdown():
     db.SessionLocal().close()
     
 
-app.include_router(webhooks.router)
+# app.include_router(webhooks.router)
 app.include_router(users.router)
 
 

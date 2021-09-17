@@ -14,13 +14,14 @@ class GameCreate(GameBase):
 
 
 class Game(GameBase):
+    id: int
     class Config:
         orm_mode = True
 
 
 class StyleBase(BaseModel):
-    score: str
-    level: str
+    size: str
+    color: str
     owner_id: Optional[str]
 
 
@@ -29,6 +30,7 @@ class StyleCreate(StyleBase):
 
 
 class Style(StyleBase):
+    id: int
     class Config:
         orm_mode = True
 
@@ -44,7 +46,8 @@ class UserCreate(UserBase):
 
 
 class User(UserBase):
-    Games: List[Game] = []
+    games: List[Game] = []
+    styles: List[Style] = []
 
     class Config:
         orm_mode = True

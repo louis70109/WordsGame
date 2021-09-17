@@ -9,7 +9,7 @@ from sql_app.database import get_db
 router = APIRouter(
     prefix="/users",
     tags=["users"],
-    responses={404: {"description": "Not found"}},
+    responses={404: {"description": "User Not found"}},
 )
 
 
@@ -33,19 +33,46 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 
-@router.post("/{user_id}/projects/", response_model=schemas.Project)
-def create_user_projects(user_id: str, project: schemas.ProjectCreate, db: Session = Depends(get_db)):
+@router.post("/{user_id}/games/", response_model=schemas.Game)
+def create_user_games(user_id: str, game: schemas.GameCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_uid(db, user_id=user_id)
     if not db_user:
         raise HTTPException(status_code=400, detail="User not registered")
-    project = crud.create_user_project(db, project=project, user_id=user_id)
-    return project
+    game = crud.create_user_game(db, game=game, user_id=user_id)
+    return game
 
 
-@router.get("/{user_id}/projects/", response_model=List[schemas.Project])
-def read_user_projects(user_id: str, db: Session = Depends(get_db)):
+@router.get("/{user_id}/games/", response_model=List[schemas.Game])
+def read_user_games(user_id: str, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_uid(db, user_id=user_id)
     if not db_user:
         raise HTTPException(status_code=400, detail="User not registered")
-    user_projects = crud.get_user_projects(db, user_id=user_id)
-    return user_projects
+    user_games = crud.get_user_games(db, user_id=user_id)
+    return user_games
+
+
+@router.get("/{user_id}/games/{level}", response_model=List[schemas.Game])
+def read_user_games_level(user_id: str, level: str, db: Session = Depends(get_db)):
+    db_user = crud.get_user_by_uid(db, user_id=user_id)
+    if not db_user:
+        raise HTTPException(status_code=400, detail="User not registered")
+    user_games = crud.get_user_game(db, user_id=user_id, level=int(level))
+    return user_games
+
+
+@router.get("/{user_id}/style/", response_model=List[schemas.Style])
+def read_user_style(user_id: str, db: Session = Depends(get_db)):
+    db_user = crud.get_user_by_uid(db, user_id=user_id)
+    if not db_user:
+        raise HTTPException(status_code=400, detail="User not registered")
+    user_style = crud.get_user_style(db, user_id=user_id)
+    return user_style
+
+
+@router.post("/{user_id}/style/", response_model=schemas.Style)
+def create_user_style(user_id: str, style: schemas.StyleCreate, db: Session = Depends(get_db)):
+    db_user = crud.get_user_by_uid(db, user_id=user_id)
+    if not db_user:
+        raise HTTPException(status_code=400, detail="User not registered")
+    style = crud.create_user_style(db, style=style, user_id=user_id)
+    return style
