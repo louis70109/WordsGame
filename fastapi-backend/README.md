@@ -24,10 +24,16 @@ Chinese content please follow here -> [如何在 VSCode 中以 Container 方式�
 - Code example: [LINE Login 實作](https://nijialin.com/2019/10/05/Day21-LINE-Login-%E5%AF%A6%E4%BD%9C/)
 - Logger dict needs to be `str()`
 
+### LINE Login Frontend query Backend API steps
+
+> 8080 is default
+
 - GET: http://localhost:8000/login/uri
   - Get LINE login redirect uri
-- GET: http://localhost:8000/login
-  - Verify login information
+- POST: http://localhost:8000/login
+  - Verify and Get login information
+  - It will check LINE user info and save to SQL
+
 ## License
 
 MIT
