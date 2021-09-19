@@ -18,6 +18,16 @@ Chinese content please follow here -> [如何在 VSCode 中以 Container 方式�
 - Choose `Python: FastAPI` to run this project.
 - Then bottom-side would become different color.(Mean you run success)
 
+## Note
+
+- LINE Login JWT [verify document](https://developers.line.biz/zh-hant/docs/line-login/integrate-line-login/#verify-id-token)
+- Code example: [LINE Login 實作](https://nijialin.com/2019/10/05/Day21-LINE-Login-%E5%AF%A6%E4%BD%9C/)
+- Logger dict needs to be `str()`
+
+- GET: http://localhost:8000/login/uri
+  - Get LINE login redirect uri
+- GET: http://localhost:8000/login
+  - Verify login information
 ## License
 
 MIT

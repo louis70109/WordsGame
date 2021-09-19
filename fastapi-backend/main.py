@@ -12,12 +12,27 @@ import logging
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
-from routers import users
+from fastapi.middleware.cors import CORSMiddleware
+
+from routers import users, login
 
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.on_event("startup")
 async def startup() -> None:
@@ -33,6 +48,7 @@ async def shutdown():
 
 # app.include_router(webhooks.router)
 app.include_router(users.router)
+app.include_router(login.router)
 
 
 @app.get("/")
