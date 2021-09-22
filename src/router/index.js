@@ -1,23 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Barrage from '../components/Barrage.vue';
-import Setting from '../components/Setting.vue';
-import Line from '../components/Line.vue';
+import LineLogin from '../components/LineLogin.vue';
+import LineAuth from '../components/LineAuth.vue';
 const routerHistory = createWebHistory();
 
 const router = createRouter({
   history: routerHistory,
   routes: [
     {
-      path: '/',
+      path: '/barrage',
       component: Barrage,
     },
     {
       path: '/line',
-      component: Setting,
+      component: LineLogin,
     },
     {
       path: '/line/auth',
-      component: Line,
+      component: LineAuth,
     },
   ],
 });

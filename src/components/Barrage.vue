@@ -18,6 +18,7 @@ import {
   //  onUnmounted
 } from 'vue';
 import gsap from 'gsap';
+
 export default {
   setup() {
     let data = ref([]),
