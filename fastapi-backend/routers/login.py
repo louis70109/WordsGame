@@ -47,8 +47,10 @@ def read_users(code: str, state: str, db: Session = Depends(get_db)):
             detail="Could not validate credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
-
-    return verify_result
+    return {
+        'name': verify_result.get('name'),
+        'picture': verify_result.get('picture')
+    }
 
 
 @router.get("/uri")
