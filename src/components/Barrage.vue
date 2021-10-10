@@ -2,7 +2,7 @@
   <div class="barrage">
     <button type="button" @click="startRandomPushWords()">開始</button>
     <button type="button" @click="clearRandomPushWords()">結束</button>
-    <h3>秒數：{{timeCount}}</h3>
+    <h3>秒數：{{ timeCount }}</h3>
     <input
       id="answer_input"
       type="text"
@@ -87,7 +87,7 @@ export default {
         );
         console.log(words[publishWord][randomWordIndex]);
         createText(words[publishWord][randomWordIndex]);
-        timeCount.value += 1
+        timeCount.value += 1; // temp timer
       }, 1000);
     }
     function clearRandomPushWords() {

@@ -1,15 +1,15 @@
 <template>
   <div class="line_login">
-    <div v-if="userCheck() === false">
+    <div v-if="userCheck() === true">
+      <div style="cursor: pointer;" @click="lineLogout">Logout</div>
+    </div>
+    <div v-else>
       <img
         alt="Vue logo"
         src="../assets/btn_login_hover.png"
         @click="login()"
         style="cursor: pointer;"
       />
-    </div>
-    <div v-else>
-      <div style="cursor: pointer;" @click="lineLogout">Logout</div>
     </div>
   </div>
 </template>
@@ -21,9 +21,7 @@ export default {
   setup() {
     let url = process.env.VUE_APP_API_URL;
 
-    onMounted(() => {
-      console.log(userCheck());
-    });
+    onMounted(() => {});
     function login() {
       fetch(url + '/login/uri').then((res) => {
         res.json().then((el) => {

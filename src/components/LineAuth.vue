@@ -1,11 +1,10 @@
 <template>
-  <div class="line_auth">
-  </div>
+  <div class="line_auth"></div>
 </template>
 
 <script>
 import { onMounted } from 'vue';
-import {userCheck} from '../utils/users'
+import { userCheck } from '../utils/users';
 export default {
   setup() {
     let url = process.env.VUE_APP_API_URL;
@@ -48,8 +47,7 @@ export default {
         res.json().then((el) => {
           console.log('Mount level...');
           addSettingToStorage(el);
-          if (userCheck() === true) window.location.replace('/')
-          
+          if (userCheck() === true) window.location.replace('/');
         });
       });
     });
