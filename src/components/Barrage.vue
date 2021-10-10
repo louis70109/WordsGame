@@ -1,7 +1,8 @@
 <template>
   <div class="barrage">
-    <button type="button" @click="startRandomPushWords()">push</button>
-    <button type="button" @click="clearRandomPushWords()">stop</button>
+    <button type="button" @click="startRandomPushWords()">開始</button>
+    <button type="button" @click="clearRandomPushWords()">結束</button>
+    <h3>秒數：{{timeCount}}</h3>
     <input
       id="answer_input"
       type="text"
@@ -24,7 +25,8 @@ export default {
     let data = ref([]),
       answer = '',
       count = ref(0),
-      intervalControl = null;
+      intervalControl = null,
+      timeCount = ref(0);
     const words = {
       a: ['あ'],
       ka: ['か'],
@@ -79,13 +81,14 @@ export default {
         console.log('Random push words start');
         let randomIndex = Math.floor(Math.random() * Object.keys(words).length);
         const publishWord = Object.keys(words)[randomIndex - 1];
-        console.log(publishWord)
+        console.log(publishWord);
         let randomWordIndex = Math.floor(
           Math.random() * Object.keys(words[publishWord]).length
         );
         console.log(words[publishWord][randomWordIndex]);
         createText(words[publishWord][randomWordIndex]);
-      }, 2000);
+        timeCount.value += 1
+      }, 1000);
     }
     function clearRandomPushWords() {
       clearInterval(intervalControl);
@@ -176,6 +179,7 @@ export default {
       answer,
       words,
       data,
+      timeCount,
       createText,
       findBullet,
       startRandomPushWords,
