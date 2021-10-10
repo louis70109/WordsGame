@@ -2,7 +2,7 @@
   <div id="app">
     <LineLogin></LineLogin>
     <div v-if="userCheck() === true">
-    <Barrage></Barrage>
+      <Barrage></Barrage>
     </div>
     <router-view />
   </div>
