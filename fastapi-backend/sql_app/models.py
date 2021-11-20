@@ -25,8 +25,8 @@ class Game(Base):
     score = Column(Integer)
     level = Column(Integer)
     owner_id = Column(String(100), ForeignKey("users.uid"))
-    __table_args__ = (
-        UniqueConstraint('score', 'level', name='game_unique'),)
+    # __table_args__ = (
+    #     UniqueConstraint('score', 'level', name='game_unique'),)
 
     owner = relationship("User", back_populates="games")
 
