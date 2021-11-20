@@ -29,7 +29,8 @@ def read_specific_user(user_id: str, db: Session = Depends(get_db)):
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_uid(db, user_id=user.uid)
     if db_user:
-        raise HTTPException(status_code=400, detail="User already registered")
+        print("User already registered")
+        return db_user
     return crud.create_user(db=db, user=user)
 
 

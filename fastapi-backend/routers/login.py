@@ -48,6 +48,7 @@ def read_users(code: str, state: str, db: Session = Depends(get_db)):
             headers={"WWW-Authenticate": "Bearer"},
         )
     return {
+        'uid': verify_result.get('sub'),
         'name': verify_result.get('name'),
         'picture': verify_result.get('picture')
     }
@@ -61,17 +62,3 @@ def get_line_login_link():
     uri = f"https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id={client}&redirect_uri={r_uri}&scope=profile%20openid%20email&state={state}&initial_amr_display=lineqr"
     logger.info('Login url is: ' + uri)
     return {'result': uri}
-
-
-@router.get("/{user_id}", response_model=schemas.User)
-def read_specific_user(user_id: str, db: Session = Depends(get_db)):
-    user = crud.get_user(db, user_id=user_id)
-    return user
-
-
-@router.post("/", response_model=schemas.User)
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_uid(db, user_id=user.uid)
-    if db_user:
-        raise HTTPException(status_code=400, detail="User already registered")
-    return crud.create_user(db=db, user=user)
