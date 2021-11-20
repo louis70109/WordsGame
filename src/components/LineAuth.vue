@@ -1,5 +1,5 @@
 <template>
-  <div class="line_auth"></div>
+  <span class="line_auth"></span>
 </template>
 
 <script>
@@ -34,11 +34,19 @@ export default {
         return {};
       }
       function addSettingToStorage(user) {
-        let settings = settingFormat();
-
-        settings.name = user.name;
-        settings.picture = user.picture;
-        localStorage.setItem('user', JSON.stringify(settings));
+        fetch(url + '/users/', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(user),
+        }).then((el) => {
+          let settings = settingFormat();
+          console.log('user post data');
+          console.log(el);
+          settings.name = user.name;
+          settings.picture = user.picture;
+          localStorage.setItem('user', JSON.stringify(settings));
+          if (userCheck() === true) window.location.replace('/');
+        });
       }
 
       fetch(url + `/login/?code=${code}&state=${state}`, {
@@ -47,7 +55,6 @@ export default {
         res.json().then((el) => {
           console.log('Mount level...');
           addSettingToStorage(el);
-          if (userCheck() === true) window.location.replace('/');
         });
       });
     });

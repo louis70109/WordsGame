@@ -1,5 +1,5 @@
 <template>
-  <div class="line_login">
+  <span class="line_login">
     <div v-if="userCheck() === true">
       <div style="cursor: pointer;" @click="lineLogout">Logout</div>
     </div>
@@ -11,7 +11,7 @@
         style="cursor: pointer;"
       />
     </div>
-  </div>
+  </span>
 </template>
 
 <script>

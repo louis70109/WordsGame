@@ -26,7 +26,8 @@ export default {
       answer = '',
       count = ref(0),
       intervalControl = null,
-      timeCount = ref(0);
+      timeCount = ref(30),
+      userRecord=ref(0);
     const words = {
       a: ['あ'],
       ka: ['か'],
@@ -87,11 +88,19 @@ export default {
         );
         console.log(words[publishWord][randomWordIndex]);
         createText(words[publishWord][randomWordIndex]);
-        timeCount.value += 1; // temp timer
+        timeCount.value -= 1; // temp timer
+
+        // Time out
+        if (timeCount.value === 0) {
+          timeCount.value = 0;
+          clearRandomPushWords();
+          alert(`時間到！！！ 分數為： ${userRecord.value}`);
+        }
       }, 1000);
     }
     function clearRandomPushWords() {
       clearInterval(intervalControl);
+      cleanBullet()
       console.log('interval stop');
     }
 
@@ -104,6 +113,7 @@ export default {
           if (words[this.answer].indexOf(bullets[key]) !== -1) {
             document.getElementById(key).remove();
             removeBulletFromStorage(bullets[key], key);
+            userRecord.value += 1;
             break;
           }
         }
@@ -120,6 +130,10 @@ export default {
       // }
       if (bullets) return JSON.parse(bullets);
       return {};
+    }
+
+    function cleanBullet(){
+      localStorage.setItem('bullets', '{}');
     }
 
     function removeBulletFromStorage(text, tagId) {
@@ -180,6 +194,7 @@ export default {
       words,
       data,
       timeCount,
+      userRecord,
       createText,
       findBullet,
       startRandomPushWords,
