@@ -6,7 +6,7 @@ export function userStorageFormat() {
   return {};
 }
 export function userCheck() {
-  const userData = localStorage.getItem('user')
+  const userData = localStorage.getItem('user');
   console.log(userData);
   console.log(typeof userData);
   if (userData === '{}' || userData === undefined || userData === null)
@@ -16,5 +16,13 @@ export function userCheck() {
 
 export function lineLogout() {
   localStorage.setItem('user', '{}');
-  window.location.reload()
+  window.location.reload();
+}
+
+export function getLevel() {
+  const url = process.env.VUE_APP_API_URL;
+
+  fetch(url + '/userid/games').then((el) => {
+    console.log(el);
+  });
 }

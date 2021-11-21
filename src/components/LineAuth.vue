@@ -7,7 +7,7 @@ import { onMounted } from 'vue';
 import { userCheck } from '../utils/users';
 export default {
   setup() {
-    let url = process.env.VUE_APP_API_URL;
+    const url = process.env.VUE_APP_API_URL;
     function userStorageFormat() {
       let settings = localStorage.getItem('user');
       if (settings) return JSON.parse(settings);
