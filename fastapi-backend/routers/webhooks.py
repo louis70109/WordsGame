@@ -36,19 +36,10 @@ async def callback(request: Request, x_line_signature: str = Header(None)):
 @handler.add(MessageEvent, message=TextMessage)
 def message_text(event):
     text = event.message.text
-    if text == 'jobs':
-        r = requests.get(
-            url='https://api.github.com/repos/octocat/hello-world/actions/workflows/runs',
-            headers={
-                'Accept': 'application/vnd.github.v3+json',
-            },
-            params={'per_page': 3})
-    # elif ooo:
-    #     https://api.github.com/repos/octocat/hello-world/actions/workflows/42
-    # elif disable xxx:
-    #       https://api.github.com/repos/octocat/hello-world/actions/workflows/42/disable
+    if text == 'a':
+        response = 'echo'
 
-    reply_event = TextSendMessage(text=str(r.json()))
+    reply_event = TextSendMessage(text=response)
     line_bot_api.reply_message(
         event.reply_token,
         reply_event

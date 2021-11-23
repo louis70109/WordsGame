@@ -2,10 +2,12 @@ from sqlalchemy.orm import Session
 
 from . import models, schemas
 
+
 def db_commit(db: Session, db_model):
     db.add(db_model)
     db.commit()
     db.refresh(db_model)
+
 
 def get_user(db: Session, user_id: str):
     return db.query(models.User).filter(models.User.uid == user_id).first()
@@ -43,11 +45,13 @@ def get_user_games(db: Session, user_id: str, skip: int = 0, limit: int = 100):
     return db.query(models.Game).filter(
         models.Game.owner_id == user_id).offset(skip).limit(limit).all()
 
+
 def get_user_game(db: Session, user_id: str, level: int = 1):
     return db.query(models.Game).filter(
         models.Game.owner_id == user_id,
         models.Game.level == level
     ).first()
+
 
 def get_user_style(db: Session, user_id: str):
     return db.query(models.Style).filter(

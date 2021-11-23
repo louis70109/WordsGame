@@ -51,3 +51,4 @@ watchgod==0.7
 websockets==8.1
 databases[postgresql]
 python-jose[cryptography]
+testcontainers

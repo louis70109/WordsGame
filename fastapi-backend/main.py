@@ -34,6 +34,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.on_event("startup")
 async def startup() -> None:
     SQLALCHEMY_DATABASE_URL = os.getenv('DATABASE_URI')
@@ -44,7 +45,7 @@ async def startup() -> None:
 @app.on_event("shutdown")
 async def shutdown():
     db.SessionLocal().close()
-    
+
 
 # app.include_router(webhooks.router)
 app.include_router(users.router)
@@ -62,6 +63,6 @@ async def read_item(request: Request):
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0"
-                , port=5000, reload=True
-                )
+    uvicorn.run(
+        "main:app", host="0.0.0.0", port=5000, reload=True
+    )
