@@ -8,10 +8,8 @@ from sql_app.database import Base, get_db
 
 
 def db_mask(postgres):
-    DB_URI = postgres.get_connection_url()
-    engine = create_engine(DB_URI)
+    engine = create_engine(postgres.get_connection_url())
     TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
     Base.metadata.create_all(bind=engine)
 
     def override_get_db():
@@ -27,10 +25,10 @@ def db_mask(postgres):
 client = TestClient(app)
 
 
-def test_health_check():
-    response = client.get("/")
-    assert response.status_code == 200
-    assert response.json() == {"message": "Hello World!"}
+# def test_health_check():
+#     response = client.get("/")
+#     assert response.status_code == 200
+#     assert response.json() == {"message": "Hello World!"}
 
 
 class TestClient(unittest.TestCase):

@@ -24,6 +24,9 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r fastapi-backend/requirements.txt
       - name: CI
+        env:
+          API_ENV: 'testing'
+          DATABASE_URI: postgresql://postgres:postgres@db/postgres
         run: |
           cd fastapi-backend/
           python -m pytest -s tests/
