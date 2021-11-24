@@ -1,8 +1,9 @@
 import unittest
 from unittest import mock
 from testcontainers.postgres import PostgresContainer
-
+import os
 with PostgresContainer("postgres:9.5").with_bind_ports(5432, 47000) as postgres:
+    os.environ['DATABASE_URI'] = postgres.get_connection_url()
     DB_URI = postgres.get_connection_url()
 import sqlalchemy
 from _pytest.monkeypatch import MonkeyPatch
@@ -11,7 +12,6 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from main import app
-import os
 
 from sql_app.database import Base, get_db
 
