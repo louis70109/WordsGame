@@ -1,7 +1,7 @@
 import os
 from sqlalchemy.engine import create_engine
 
-if os.getenv('API_ENV') != 'production':
+if os.getenv('API_ENV') != 'production' or os.getenv('API_ENV') != 'testing':
     from dotenv import load_dotenv
 
     load_dotenv()
