@@ -1,26 +1,18 @@
 import unittest
-from unittest import mock
 from testcontainers.postgres import PostgresContainer
-import os
-
-import sqlalchemy
-from _pytest.monkeypatch import MonkeyPatch
-from mock import patch
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from main import app
-
 from sql_app.database import Base, get_db
 
-with PostgresContainer("postgres:9.5").with_bind_ports(5432, 47000) as postgres:
-    # os.environ['DATABASE_URI'] = postgres.get_connection_url()
+
+def db_mask(postgres):
     DB_URI = postgres.get_connection_url()
     engine = create_engine(DB_URI)
     TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     Base.metadata.create_all(bind=engine)
-
 
     def override_get_db():
         try:
@@ -29,13 +21,8 @@ with PostgresContainer("postgres:9.5").with_bind_ports(5432, 47000) as postgres:
         finally:
             db.close()
 
+    app.dependency_overrides[get_db] = override_get_db
 
-    app.dependency_overrides[get_db] = override_get_db()
-
-print("@@@@@@@@@@@@@@@@")
-print(DB_URI)
-print()
-print("@@@@@@@@@@@@@@@@")
 
 client = TestClient(app)
 
@@ -47,14 +34,14 @@ def test_health_check():
 
 
 class TestClient(unittest.TestCase):
+
     def setUp(self):
         pass
 
     def test_read_main(self):
-        print("___________________-")
-        print(os.getenv('DATABASE_URI'))
-        # need to create table first
-        response = client.get("/users")
+        with PostgresContainer("postgres:9.5").with_bind_ports(5432, 47000) as postgres:
+            db_mask(postgres)
+            response = client.get("/users/")
 
-        print(response.json())
-        raise "hi"
+            print(response.json())
+            assert response.status_code == 200
