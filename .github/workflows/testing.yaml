@@ -25,4 +25,4 @@ jobs:
           python -m pip install -r requirements.txt
       - name: Lint with flake8
         run: |
-          pytest
+          pytest fastapi-backend/tests/

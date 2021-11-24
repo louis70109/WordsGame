@@ -7,8 +7,7 @@ export function userStorageFormat() {
 }
 export function userCheck() {
   const userData = localStorage.getItem('user');
-  console.log(userData);
-  console.log(typeof userData);
+
   if (userData === '{}' || userData === undefined || userData === null)
     return false;
   else return true;
