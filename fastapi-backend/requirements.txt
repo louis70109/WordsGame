@@ -24,7 +24,7 @@ mock==4.0.3
 packaging==20.9
 pep8==1.7.1
 pluggy==0.13.1
-psycopg2
+psycopg2-binary
 py==1.10.0
 pycodestyle==2.7.0
 pydantic==1.8.2
