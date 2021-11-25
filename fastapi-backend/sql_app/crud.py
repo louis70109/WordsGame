@@ -28,7 +28,7 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 
 def get_games(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Game).offset(skip).limit(limit).all()
+    return db.query(models.Game).offset(skip).limit(limit).order_by("score desc, level desc").all()
 
 
 def create_user_game(db: Session, game: schemas.GameCreate, user_id: str):

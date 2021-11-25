@@ -17,9 +17,9 @@ export default {
     }
     function addSettingToStorage(user) {
       let settings = userStorageFormat();
-      // call api
-      settings['name'] = user.name;
-      settings['picture'] = user.picture;
+      settings.uid = user.uid
+      settings.name = user.name;
+      settings.picture = user.picture;
       localStorage.setItem('user', JSON.stringify(settings));
     }
 
@@ -38,10 +38,11 @@ export default {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify(user),
-        }).then((el) => {
+        }).then(() => {
           let settings = settingFormat();
-          console.log('user post data');
-          console.log(el);
+          
+          // create user data and set to localstorage
+          settings.uid = user.uid
           settings.name = user.name;
           settings.picture = user.picture;
           localStorage.setItem('user', JSON.stringify(settings));

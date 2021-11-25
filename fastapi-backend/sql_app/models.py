@@ -41,6 +41,8 @@ class Style(Base):
         server_default=style_id_seq.next_value())
     size = Column(String(100))
     color = Column(String(100))
+    duration = Column(Integer, default=10)
+    level = Column(Integer)
     owner_id = Column(String(100), ForeignKey("users.uid"), unique=True)
 
     owner = relationship("User", back_populates="styles")

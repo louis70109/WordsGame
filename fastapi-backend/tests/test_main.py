@@ -36,8 +36,18 @@ class TestClient(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_read_main(self):
-        with PostgresContainer("postgres:9.5").with_bind_ports(5432, 47000) as postgres:
+    def db_layer_access_check(self):
+        with PostgresContainer("postgres:9.5") as postgres:
+            e = sqlalchemy.create_engine(postgres.get_connection_url())
+            result = e.execute("select version()")
+
+    def test_health_check(self):
+        response = client.get("/")
+        assert response.status_code == 200
+        assert response.json() == {"message": "Hello World!"}
+
+    def test_get_user_list(self):
+        with PostgresContainer("postgres:9.5") as postgres:
             db_mask(postgres)
             response = client.get("/users/")
 

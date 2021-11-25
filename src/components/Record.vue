@@ -1,21 +1,14 @@
 <template>
   <span class="record">
+    <button @click="createGame({score: 10, level: 1})">HI</button>
   </span>
 </template>
 
 <script>
-import { userCheck, lineLogout } from '../utils/users';
+import {  createGame } from '../utils/users';
 export default {
   setup() {
-    let url = process.env.VUE_APP_API_URL;
-    function login() {
-      fetch(url + '/login/uri').then((res) => {
-        res.json().then((el) => {
-          window.location.replace(el.result);
-        });
-      });
-    }
-    return { login, userCheck, lineLogout };
+    return { createGame };
   },
 };
 </script>

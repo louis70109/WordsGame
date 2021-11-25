@@ -13,13 +13,9 @@
 </template>
 
 <script>
-import {
-  ref,
-  // onMounted,
-  //  onUnmounted
-} from 'vue';
+import { ref } from 'vue';
 import gsap from 'gsap';
-
+import { createGame, setStyle } from '../utils/users';
 export default {
   setup() {
     let data = ref([]),
@@ -27,7 +23,8 @@ export default {
       count = ref(0),
       intervalControl = null,
       timeCount = ref(30),
-      userRecord=ref(0);
+      userRecord = ref(0),
+      basicSetting = setStyle();
     const words = {
       a: ['あ'],
       ka: ['か'],
@@ -100,7 +97,8 @@ export default {
     }
     function clearRandomPushWords() {
       clearInterval(intervalControl);
-      cleanBullet()
+      createGame({score: userRecord.value, level: basicSetting.level});
+      cleanBullet();
       console.log('interval stop');
     }
 
@@ -132,7 +130,7 @@ export default {
       return {};
     }
 
-    function cleanBullet(){
+    function cleanBullet() {
       localStorage.setItem('bullets', '{}');
     }
 
@@ -161,8 +159,7 @@ export default {
 
       localStorage.setItem('bullets', JSON.stringify(bullets));
     }
-    // function addRecord(user, record) {}
-    async function createText(text) {
+    function setBulletBody() {
       let div_text = document.createElement('div');
       div_text.id = 'text' + (count.value += 1);
       div_text.style.position = 'fixed';
@@ -174,13 +171,20 @@ export default {
       );
 
       div_text.style.top = random + 'px';
+      div_text.style.color = basicSetting.color
+      div_text.style.fontSize = basicSetting.size
+      return div_text
+    }
+    async function createText(text) {
+      let div_text = setBulletBody()
+
       if (text) {
         div_text.appendChild(document.createTextNode(text));
         document.body.appendChild(div_text);
         addBulletToStorage(text, div_text.id);
       }
       await gsap.to('#' + div_text.id, {
-        duration: 8,
+        duration: basicSetting.duration,
         x: -1 * (document.documentElement.clientWidth + div_text.clientWidth),
       });
       if (div_text.hasChildNodes()) {

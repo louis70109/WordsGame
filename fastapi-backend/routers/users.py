@@ -27,7 +27,7 @@ def read_specific_user(user_id: str, db: Session = Depends(get_db)):
 
 @router.post("/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_uid(db, user_id=user.uid)
+    db_user = crud.get_user(db, user_id=user.uid)
     if db_user:
         print("User already registered")
         return db_user
@@ -36,7 +36,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/{user_id}/games/", response_model=schemas.Game)
 def create_user_games(user_id: str, game: schemas.GameCreate, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_uid(db, user_id=user_id)
+    db_user = crud.get_user(db, user_id=user_id)
     if not db_user:
         raise HTTPException(status_code=400, detail="User not registered")
     game = crud.create_user_game(db, game=game, user_id=user_id)
@@ -45,16 +45,16 @@ def create_user_games(user_id: str, game: schemas.GameCreate, db: Session = Depe
 
 @router.get("/{user_id}/games/", response_model=List[schemas.Game])
 def read_user_games(user_id: str, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_uid(db, user_id=user_id)
+    db_user = crud.get_user(db, user_id=user_id)
     if not db_user:
         raise HTTPException(status_code=400, detail="User not registered")
-    user_games = crud.get_user_games(db, user_id=user_id)
+    user_games = crud.get_user_games(db, user_id=user_id, limit=10)
     return user_games
 
 
 @router.get("/{user_id}/games/{level}", response_model=List[schemas.Game])
 def read_user_games_level(user_id: str, level: str, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_uid(db, user_id=user_id)
+    db_user = crud.get_user(db, user_id=user_id)
     if not db_user:
         raise HTTPException(status_code=400, detail="User not registered")
     user_games = crud.get_user_game(db, user_id=user_id, level=int(level))
