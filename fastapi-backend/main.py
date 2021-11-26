@@ -14,7 +14,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import users, login
+from routers import users, login, webhooks
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +47,7 @@ async def shutdown():
     db.SessionLocal().close()
 
 
-# app.include_router(webhooks.router)
+app.include_router(webhooks.router)
 app.include_router(users.router)
 app.include_router(login.router)
 

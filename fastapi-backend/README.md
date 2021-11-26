@@ -38,3 +38,16 @@ Chinese content please follow here -> [如何在 VSCode 中以 Container 方式�
 ## License
 
 MIT
+
+
+## Backup
+
+```
+AttributeError: 'generator' object has no attribute 'query'
+```
+
+`get_db()` is not an sqlalchemy session object but rather a generator that yields a session object.
+
+Use `next()` to wrap `get_db()`.
+
+refs: https://stackoverflow.com/questions/65982681/how-to-access-the-database-from-unit-test-in-fast-api

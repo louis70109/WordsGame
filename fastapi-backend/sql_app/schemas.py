@@ -22,6 +22,8 @@ class Game(GameBase):
 class StyleBase(BaseModel):
     size: str
     color: str
+    duration: int
+    level: int
     owner_id: Optional[str]
 
 

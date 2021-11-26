@@ -61,9 +61,9 @@ def read_user_games_level(user_id: str, level: str, db: Session = Depends(get_db
     return user_games
 
 
-@router.get("/{user_id}/style/", response_model=List[schemas.Style])
+@router.get("/{user_id}/style/", response_model=schemas.Style)
 def read_user_style(user_id: str, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_uid(db, user_id=user_id)
+    db_user = crud.get_user(db, user_id=user_id)
     if not db_user:
         raise HTTPException(status_code=400, detail="User not registered")
     user_style = crud.get_user_style(db, user_id=user_id)
@@ -72,7 +72,7 @@ def read_user_style(user_id: str, db: Session = Depends(get_db)):
 
 @router.post("/{user_id}/style/", response_model=schemas.Style)
 def create_user_style(user_id: str, style: schemas.StyleCreate, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_uid(db, user_id=user_id)
+    db_user = crud.get_user(db, user_id=user_id)
     if not db_user:
         raise HTTPException(status_code=400, detail="User not registered")
     style = crud.create_user_style(db, style=style, user_id=user_id)

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import gsap from 'gsap';
 import { createGame, setStyle } from '../utils/users';
 export default {
@@ -24,7 +24,7 @@ export default {
       intervalControl = null,
       timeCount = ref(30),
       userRecord = ref(0),
-      basicSetting = setStyle();
+      basicSetting = {};
     const words = {
       a: ['あ'],
       ka: ['か'],
@@ -73,7 +73,9 @@ export default {
       ro: ['ろ'],
       wo: ['を'],
     };
-
+    onMounted(async () => {
+      basicSetting = await setStyle();
+    });
     function startRandomPushWords() {
       intervalControl = setInterval(() => {
         console.log('Random push words start');
@@ -91,15 +93,16 @@ export default {
         if (timeCount.value === 0) {
           timeCount.value = 0;
           clearRandomPushWords();
-          alert(`時間到！！！ 分數為： ${userRecord.value}`);
+          alert(`時間到！ 分數為： ${userRecord.value}`);
         }
       }, 1000);
     }
     function clearRandomPushWords() {
+      // Reset all count
       clearInterval(intervalControl);
-      createGame({score: userRecord.value, level: basicSetting.level});
+      createGame({ score: userRecord.value, level: basicSetting.level });
       cleanBullet();
-      console.log('interval stop');
+      timeCount.value = 30;
     }
 
     function findBullet() {
@@ -171,12 +174,12 @@ export default {
       );
 
       div_text.style.top = random + 'px';
-      div_text.style.color = basicSetting.color
-      div_text.style.fontSize = basicSetting.size
-      return div_text
+      div_text.style.color = basicSetting.color;
+      div_text.style.fontSize = basicSetting.size;
+      return div_text;
     }
     async function createText(text) {
-      let div_text = setBulletBody()
+      let div_text = setBulletBody();
 
       if (text) {
         div_text.appendChild(document.createTextNode(text));
@@ -199,6 +202,7 @@ export default {
       data,
       timeCount,
       userRecord,
+      basicSetting,
       createText,
       findBullet,
       startRandomPushWords,

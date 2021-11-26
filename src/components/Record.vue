@@ -1,14 +1,14 @@
 <template>
   <span class="record">
-    <button @click="createGame({score: 10, level: 1})">HI</button>
+    <!-- <button @click="">HI</button> -->
   </span>
 </template>
 
 <script>
-import {  createGame } from '../utils/users';
+import {  styleStorageFormat  } from '../utils/users';
 export default {
   setup() {
-    return { createGame };
+    return { styleStorageFormat };
   },
 };
 </script>
