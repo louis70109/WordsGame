@@ -10,8 +10,8 @@ from sql_app.admin_crud import set_styles
 from sql_app import schemas
 from sql_app.database import get_db
 
-line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
-handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'))
+line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN')) or 'Token'
+handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET')) or 'handler'
 
 router = APIRouter(
     prefix="/webhooks",
