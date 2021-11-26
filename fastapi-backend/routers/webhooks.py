@@ -10,13 +10,13 @@ from sql_app.admin_crud import set_styles
 from sql_app import schemas
 from sql_app.database import get_db
 
-
-line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN', "TOKEN"))
-handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'), 'SECRET')
-
 if os.getenv('API_ENV') == 'testing':
     line_bot_api = 'test_api'
     handler = 'test_handler'
+else:
+    line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN', "TOKEN"))
+    handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'), 'SECRET')
+
 
 router = APIRouter(
     prefix="/webhooks",
