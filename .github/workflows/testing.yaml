@@ -27,6 +27,8 @@ jobs:
         env:
           API_ENV: 'testing'
           DATABASE_URI: postgresql://postgres:postgres@db/postgres
+          LINE_CHANNEL_ACCESS_TOKEN: ${LINE_CHANNEL_ACCESS_TOKEN}
+          LINE_CHANNEL_SECRET: ${LINE_CHANNEL_SECRET}
         run: |
           cd fastapi-backend/
           python -m pytest -s tests/
