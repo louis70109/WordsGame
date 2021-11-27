@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <div>
-    <LineLogin></LineLogin>
-    <span v-if="userCheck() === true">
-      <Barrage></Barrage>
-    </span>
+      <LineLogin></LineLogin>
+      <span v-if="userCheck() === true">
+        <Barrage></Barrage>
+      </span>
     </div>
     <router-view />
   </div>

@@ -1,5 +1,9 @@
 <template>
-  <span class="line_auth"></span>
+  <span class="line_auth">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </span>
 </template>
 
 <script>
@@ -17,7 +21,7 @@ export default {
     }
     function addSettingToStorage(user) {
       let settings = userStorageFormat();
-      settings.uid = user.uid
+      settings.uid = user.uid;
       settings.name = user.name;
       settings.picture = user.picture;
       localStorage.setItem('user', JSON.stringify(settings));
@@ -40,9 +44,9 @@ export default {
           body: JSON.stringify(user),
         }).then(() => {
           let settings = settingFormat();
-          
+
           // create user data and set to localstorage
-          settings.uid = user.uid
+          settings.uid = user.uid;
           settings.name = user.name;
           settings.picture = user.picture;
           localStorage.setItem('user', JSON.stringify(settings));

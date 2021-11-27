@@ -39,7 +39,6 @@ Chinese content please follow here -> [如何在 VSCode 中以 Container 方式�
 
 MIT
 
-
 ## Backup
 
 ```
@@ -51,3 +50,9 @@ AttributeError: 'generator' object has no attribute 'query'
 Use `next()` to wrap `get_db()`.
 
 refs: https://stackoverflow.com/questions/65982681/how-to-access-the-database-from-unit-test-in-fast-api
+
+### I can run Testcontainer at local, but why my LINE Bot function fail in GitHub Actions?
+
+Because we ran LINE Bot development and testing with `.env` file for environment variable, so LINE Bot webhook could init success in testing.
+
+Next, when your repo push to GitHub, you just set a real LINE Bot channel_access_token and channel_secret at GitHub Actions for testing, that your would success in testing.

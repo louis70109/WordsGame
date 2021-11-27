@@ -1,16 +1,25 @@
 <template>
   <span class="line_login">
-    <div v-if="userCheck() === true">
-      <div style="cursor: pointer;" @click="lineLogout">Logout</div>
-    </div>
-    <div v-else>
-      <img
-        alt="Vue logo"
-        src="../assets/btn_login_hover.png"
-        @click="login()"
-        style="cursor: pointer;"
-      />
-    </div>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand">日文仔</a>
+        <form class="d-flex">
+          <div v-if="userCheck() === true">
+            <button class="btn btn-secondary" @click="lineLogout">
+              登出
+            </button>
+          </div>
+          <div v-else>
+            <img
+              alt="Vue logo"
+              src="../assets/btn_login_hover.png"
+              @click="login()"
+              style="cursor: pointer;"
+            />
+          </div>
+        </form>
+      </div>
+    </nav>
   </span>
 </template>
 

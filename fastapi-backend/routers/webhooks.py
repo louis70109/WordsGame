@@ -39,28 +39,32 @@ async def callback(request: Request, x_line_signature: str = Header(None), ):
 @handler.add(MessageEvent, message=TextMessage)
 def message_text(event):
     text = event.message.text
-    response = "hi"
-    if text == 'a':
+    admin = os.getenv('ADMIN_UID', None)
+    if admin is None:
+        response = 'Hello hey hey hey'
+    elif text == '0':
         response = set_styles(db=next(get_db()), style=schemas.StyleCreate(
             color='#000000',
             size='50px',
             duration=20,
             level=0,
         ))
-    elif text == 's':
+    elif text == '1':
         response = set_styles(db=next(get_db()), style=schemas.StyleCreate(
             color='#000000',
             size='30px',
             duration=10,
             level=1,
         ))
-    elif text == 'd':
+    elif text == '2':
         response = set_styles(db=next(get_db()), style=schemas.StyleCreate(
             color='#000000',
             size='18px',
             duration=7,
             level=3,
         ))
+    else:
+        response = 'Hi yo'
     reply_event = TextSendMessage(text=str(response))
     line_bot_api.reply_message(
         event.reply_token,

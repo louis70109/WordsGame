@@ -36,8 +36,12 @@ def create_user_game(db: Session, game: schemas.GameCreate, user_id: str):
         raise Exception('Game commit error', e)
     return db_game
 
+def get_games(db: Session, limit: int = 20):
+    return db.query(models.Game).order_by(
+        models.Game.level.desc(), models.Game.score.desc()).limit(limit).all()
 
-def get_user_games(db: Session, user_id: str, skip: int = 0, limit: int = 100):
+
+def get_user_games(db: Session, user_id: str, skip: int = 0, limit: int = 20):
     return db.query(models.Game).filter(
         models.Game.owner_id == user_id).offset(skip).limit(limit).all()
 
