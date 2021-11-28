@@ -1,41 +1,41 @@
 <template>
   <div class="barrage">
-      <div class="row justify-content-md-center">
-        <button
-          type="button"
-          class="btn btn-info col col-lg-2"
-          @click="startRandomPushWords()"
-        >
-          開始
-        </button>
-        <h4 class="col-md-auto">{{ timeCount }} 秒</h4>
+    <div class="row justify-content-md-center">
+      <button
+        type="button"
+        class="btn btn-info col col-lg-2"
+        @click="startRandomPushWords()"
+      >
+        開始
+      </button>
+      <h4 class="col-md-auto">{{ timeCount }} 秒</h4>
 
-        <button
-          type="button"
-          class="btn btn-danger col col-lg-2"
-          @click="clearRandomPushWords()"
-        >
-          結束
-        </button>
-      </div>
+      <button
+        type="button"
+        class="btn btn-danger col col-lg-2"
+        @click="clearRandomPushWords()"
+      >
+        結束
+      </button>
     </div>
-
-    <div class="container">
-      <div class="row">
-        <div class="col"></div>
-        <div class="input-group col-2">
-          <span class="input-group-text" id="inputGroup-sizing-lg">單字</span>
-          <input
-            id="answer_input"
-            type="text"
-            v-model="answer"
-            @keyup.enter="findBullet()"
-            class="form-control"
-            aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-lg"
-          />
-        </div>
-        <div class="col"></div>
+  </div>
+  <p class="row justify-content-md-center">日文單字會在各種飛出，看到趕快打羅馬拼音蛤</p>
+  <div class="container">
+    <div class="row">
+      <div class="col"></div>
+      <div class="input-group col-2">
+        <span class="input-group-text" id="inputGroup-sizing-lg">單字</span>
+        <input
+          id="answer_input"
+          type="text"
+          v-model="answer"
+          @keyup.enter="findBullet()"
+          class="form-control"
+          aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-lg"
+        />
+      </div>
+      <div class="col"></div>
     </div>
   </div>
 </template>

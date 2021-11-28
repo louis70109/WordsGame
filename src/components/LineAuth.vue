@@ -1,7 +1,6 @@
 <template>
   <span class="line_auth">
     <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
     </div>
   </span>
 </template>

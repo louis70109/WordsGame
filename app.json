@@ -1,7 +1,7 @@
 {
   "name": "heroku-buildpack-static",
-  "description": "LINE LIFF Vue3 template",
-  "repository": "https://github.com/louis70109/announcer-vue",
+  "description": "wordgame",
+  "repository": "https://github.com/louis70109/WordsGame",
   "keywords": ["LINE", "vue", "static"],
   "buildpacks": [
     {
@@ -9,6 +9,12 @@
     },
     {
       "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-python.git"
+    },
+    {
+      "url": "heroku/python"
     }
   ]
 }
